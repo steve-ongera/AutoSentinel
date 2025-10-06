@@ -1,0 +1,96 @@
+<!-- vehicle_list.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Vehicle Database - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2>Vehicle Database</h2>
+        <a href="{% url 'search' %}" class="btn btn-dark">
+            <i class="bi bi-search"></i> Advanced Search
+        </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label small">Make</label>
+                    <select class="form-select form-select-sm" name="make">
+                        <option value="">All Makes</option>
+                        {% for make in makes %}
+                        <option value="{{ make }}">{{ make }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small">Year</label>
+                    <select class="form-select form-select-sm" name="year">
+                        <option value="">All Years</option>
+                        {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small">Title Status</label>
+                    <select class="form-select form-select-sm" name="status">
+                        <option value="">All Status</option>
+                        <option value="clean">Clean</option>
+                        <option value="salvage">Salvage</option>
+                        <option value="rebuilt">Rebuilt</option>
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-dark btn-sm">Apply Filters</button>
+                    <a href="{% url 'vehicle_list' %}" class="btn btn-outline-secondary btn-sm">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Vehicle Grid -->
+    <div class="row">
+        {% for vehicle in vehicles %}
+        <div class="col-md-6 col-lg-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body p-3">
+                    <h6 class="card-title">{{ vehicle.year }} {{ vehicle.make }}</h6>
+                    <p class="small text-muted mb-2">{{ vehicle.model }}</p>
+                    <p class="small mb-2"><code class="small">{{ vehicle.vin }}</code></p>
+                    
+                    {% if vehicle.is_stolen %}
+                    <span class="badge bg-danger mb-2">Stolen</span>
+                    {% endif %}
+                    
+                    <div class="d-grid">
+                        <a href="{% url 'vehicle_detail' vehicle.vin %}" class="btn btn-sm btn-dark">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No vehicles found.</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if vehicles.has_other_pages %}
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if vehicles.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ vehicles.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item active"><span class="page-link">{{ vehicles.number }} of {{ vehicles.paginator.num_pages }}</span></li>
+            {% if vehicles.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ vehicles.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

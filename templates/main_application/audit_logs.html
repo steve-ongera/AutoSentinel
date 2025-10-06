@@ -1,0 +1,109 @@
+<!-- audit_logs.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Audit Logs - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h2>Audit Logs</h2>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label small">Action</label>
+                    <select class="form-select form-select-sm" name="action">
+                        <option value="">All Actions</option>
+                        <option value="view">View</option>
+                        <option value="search">Search</option>
+                        <option value="create">Create</option>
+                        <option value="update">Update</option>
+                        <option value="delete">Delete</option>
+                        <option value="access_restricted">Access Restricted</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small">User</label>
+                    <input type="text" class="form-control form-control-sm" name="user" placeholder="User ID">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small">&nbsp;</label>
+                    <div>
+                        <button type="submit" class="btn btn-dark btn-sm">Apply Filters</button>
+                        <a href="{% url 'audit_logs' %}" class="btn btn-outline-secondary btn-sm">Clear</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Logs Table -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>User</th>
+                            <th>Action</th>
+                            <th>Resource Type</th>
+                            <th>Resource ID</th>
+                            <th>IP Address</th>
+                            <th>Vehicle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td class="small">{{ log.timestamp|date:"Y-m-d H:i:s" }}</td>
+                            <td class="small">{{ log.user.username|default:"Anonymous" }}</td>
+                            <td>
+                                <span class="badge bg-{% if log.action == 'delete' %}danger{% elif log.action == 'create' %}success{% elif log.action == 'update' %}warning{% else %}secondary{% endif %}">
+                                    {{ log.get_action_display }}
+                                </span>
+                            </td>
+                            <td class="small">{{ log.resource_type }}</td>
+                            <td class="small"><code>{{ log.resource_id|default:"-" }}</code></td>
+                            <td class="small">{{ log.ip_address|default:"-" }}</td>
+                            <td class="small">
+                                {% if log.vehicle %}
+                                <a href="{% url 'vehicle_detail' log.vehicle.vin %}">{{ log.vehicle.vin }}</a>
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">No logs found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if logs.has_other_pages %}
+    <nav class="mt-3">
+        <ul class="pagination justify-content-center">
+            {% if logs.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ logs.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item active"><span class="page-link">{{ logs.number }} of {{ logs.paginator.num_pages }}</span></li>
+            {% if logs.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ logs.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
+{% endblock %}

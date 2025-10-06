@@ -1,0 +1,47 @@
+<!-- vehicle_history.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Complete History - {{ vehicle.vin }} - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle_detail' vehicle.vin %}">{{ vehicle.vin }}</a></li>
+            <li class="breadcrumb-item active">Complete History</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-4">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }} - Complete History</h2>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Timeline -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-clock-history"></i> Timeline</h5>
+                </div>
+                <div class="card-body">
+                    {% for event in title_events %}
+                    <div class="border-start border-3 ps-3 mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h6>{{ event.event_date }}</h6>
+                            <span class="badge bg-primary">{{ event.get_event_type_display }}</span>
+                        </div>
+                        <p class="small mb-1"><strong>State:</strong> {{ event.state }}</p>
+                        <p class="small mb-1"><strong>Title Status:</strong> {{ event.get_title_status_display }}</p>
+                        {% if event.odometer_reading %}
+                        <p class="small mb-1"><strong>Odometer:</strong> {{ event.odometer_reading }} {{ event.odometer_unit }}</p>
+                        {% endif %}
+                        {% if event.notes %}
+                        <p class="small text-muted mb-0">{{ event.notes }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,132 @@
+<!-- statistics.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Statistics & Analytics - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2 class="my-4">Statistics & Analytics</h2>
+
+    <!-- Vehicle Statistics -->
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-car-front"></i> Vehicle Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <h6>Top Makes</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Make</th>
+                                            <th class="text-end">Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in vehicle_stats.by_make %}
+                                        <tr>
+                                            <td>{{ item.make }}</td>
+                                            <td class="text-end"><strong>{{ item.count }}</strong></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <h6>By Year</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Year</th>
+                                            <th class="text-end">Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in vehicle_stats.by_year %}
+                                        <tr>
+                                            <td>{{ item.year }}</td>
+                                            <td class="text-end"><strong>{{ item.count }}</strong></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6>Title Status Distribution</h6>
+                    <div class="row">
+                        {% for item in vehicle_stats.by_status %}
+                        <div class="col-md-3 mb-2">
+                            <div class="card bg-light">
+                                <div class="card-body text-center p-2">
+                                    <h4>{{ item.count }}</h4>
+                                    <p class="small text-muted mb-0">{{ item.current_title_status|title }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accident Statistics -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Accident Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h3>{{ accident_stats.total }}</h3>
+                        <p class="text-muted small mb-0">Total Accidents Recorded</p>
+                    </div>
+                    
+                    <h6 class="mt-4">By Severity</h6>
+                    {% for item in accident_stats.by_severity %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small">{{ item.severity|title }}</span>
+                        <span class="badge bg-{% if item.severity == 'total_loss' %}danger{% elif item.severity == 'severe' %}warning{% else %}secondary{% endif %}">
+                            {{ item.count }}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Statistics -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-search"></i> Search Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h3>{{ search_stats.total }}</h3>
+                        <p class="text-muted small mb-0">Total Searches Performed</p>
+                    </div>
+                    
+                    <h6 class="mt-4">By Type</h6>
+                    {% for item in search_stats.by_type %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small">{{ item.search_type|upper }}</span>
+                        <span class="badge bg-primary">{{ item.count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

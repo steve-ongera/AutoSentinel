@@ -1,0 +1,89 @@
+
+<!-- verify_report.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Verify Report - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin_dashboard' %}">Admin</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'crowdsourced_reports' %}">Reports</a></li>
+            <li class="breadcrumb-item active">Verify</li>
+        </ol>
+    </nav>
+
+    <h2 class="mb-4">Verify Crowdsourced Report</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Report Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Vehicle:</strong>
+                        <a href="{% url 'vehicle_detail' report.vehicle.vin %}">
+                            {{ report.vehicle.year }} {{ report.vehicle.make }} {{ report.vehicle.model }}
+                        </a>
+                    </div>
+                    <div class="mb-3">
+                        <strong>VIN:</strong> <code>{{ report.vehicle.vin }}</code>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Report Type:</strong> 
+                        <span class="badge bg-info">{{ report.get_report_type_display }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Submitted By:</strong> {{ report.submitted_by.username }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Report Date:</strong> {{ report.report_date }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Location:</strong> 
+                        {% if report.location_city and report.location_state %}
+                        {{ report.location_city }}, {{ report.location_state }}
+                        {% else %}
+                        Not provided
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Description:</strong>
+                        <p class="mt-2">{{ report.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Verification Actions</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <p class="small text-muted">Review this report and choose an action:</p>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" name="action" value="verify" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Verify Report
+                            </button>
+                            <button type="submit" name="action" value="reject" class="btn btn-danger">
+                                <i class="bi bi-x-circle"></i> Reject Report
+                            </button>
+                            <a href="{% url 'crowdsourced_reports' %}" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

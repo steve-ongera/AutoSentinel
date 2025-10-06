@@ -1,0 +1,74 @@
+<!-- stolen_vehicles.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Stolen Vehicles - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <div>
+            <h2>Stolen Vehicles</h2>
+            <p class="text-muted mb-0">{{ vehicles|length }} stolen vehicle{{ vehicles|length|pluralize }} tracked</p>
+        </div>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    {% if vehicles %}
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>VIN</th>
+                            <th>Vehicle</th>
+                            <th>Status</th>
+                            <th>Reported Date</th>
+                            <th>Agency</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vehicle in vehicles %}
+                        <tr>
+                            <td><code class="small">{{ vehicle.vin }}</code></td>
+                            <td>{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</td>
+                            <td><span class="badge bg-danger">Stolen</span></td>
+                            <td class="small">
+                                {% if vehicle.theft_records.first %}
+                                {{ vehicle.theft_records.first.reported_date }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td class="small">
+                                {% if vehicle.theft_records.first %}
+                                {{ vehicle.theft_records.first.reporting_agency }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td class="small">{{ vehicle.updated_at|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <a href="{% url 'vehicle_detail' vehicle.vin %}" class="btn btn-sm btn-outline-dark">View</a>
+                                {% if vehicle.consenting_for_tracking %}
+                                <a href="{% url 'vehicle_tracking' vehicle.vin %}" class="btn btn-sm btn-outline-primary">Track</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-success">
+        <i class="bi bi-check-circle"></i> No stolen vehicles currently in the system.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

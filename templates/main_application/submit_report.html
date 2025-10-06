@@ -1,0 +1,85 @@
+<!-- submit_report.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Submit Report - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <nav aria-label="breadcrumb" class="mt-3">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'vehicle_detail' vehicle.vin %}">{{ vehicle.vin }}</a></li>
+                    <li class="breadcrumb-item active">Submit Report</li>
+                </ol>
+            </nav>
+
+            <h2 class="mb-4">Submit Crowdsourced Report</h2>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</h5>
+                    <p class="text-muted small mb-0">VIN: <code>{{ vehicle.vin }}</code></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Report Information</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="report_type" class="form-label">Report Type</label>
+                            <select class="form-select" id="report_type" name="report_type" required>
+                                <option value="">Select Type</option>
+                                <option value="sighting">Vehicle Sighting</option>
+                                <option value="condition">Condition Report</option>
+                                <option value="maintenance">Maintenance Record</option>
+                                <option value="accident">Accident Report</option>
+                                <option value="theft">Theft Report</option>
+                                <option value="for_sale">For Sale Listing</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="report_date" class="form-label">Date of Incident/Observation</label>
+                            <input type="date" class="form-control" id="report_date" name="report_date" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="location_city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="location_city" name="location_city">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="location_state" class="form-label">State</label>
+                                <input type="text" class="form-control" id="location_state" name="location_state" maxlength="2" placeholder="e.g., CA">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required placeholder="Provide detailed information about your observation or report..."></textarea>
+                            <div class="form-text">Be as specific as possible. Include relevant details like condition, damage, modifications, or any other pertinent information.</div>
+                        </div>
+
+                        <div class="alert alert-info small">
+                            <i class="bi bi-info-circle"></i> Your report will be reviewed by our team before being published. Please ensure all information is accurate.
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-dark">Submit Report</button>
+                            <a href="{% url 'vehicle_detail' vehicle.vin %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

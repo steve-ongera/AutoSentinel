@@ -1,0 +1,241 @@
+<!-- vehicle_detail.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }} - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mt-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle_list' %}">Vehicles</a></li>
+            <li class="breadcrumb-item active">{{ vehicle.vin }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-3">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</h4>
+                    <div>
+                        {% if vehicle.is_stolen %}
+                        <span class="badge bg-danger"><i class="bi bi-exclamation-triangle"></i> STOLEN</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>VIN:</strong> <code>{{ vehicle.vin }}</code></p>
+                            <p class="mb-1"><strong>Year:</strong> {{ vehicle.year }}</p>
+                            <p class="mb-1"><strong>Make:</strong> {{ vehicle.make }}</p>
+                            <p class="mb-1"><strong>Model:</strong> {{ vehicle.model }}</p>
+                            <p class="mb-1"><strong>Trim:</strong> {{ vehicle.trim|default:"N/A" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Mileage:</strong> {{ vehicle.current_mileage|default:"N/A" }} miles</p>
+                            <p class="mb-1"><strong>Color:</strong> {{ vehicle.color|default:"N/A" }}</p>
+                            <p class="mb-1"><strong>Body Style:</strong> {{ vehicle.body_style|default:"N/A" }}</p>
+                            <p class="mb-1"><strong>Owners:</strong> {{ vehicle.current_owner_count }}</p>
+                            <p class="mb-1"><strong>Title Status:</strong> 
+                                <span class="badge bg-{% if vehicle.current_title_status == 'clean' %}success{% else %}warning{% endif %}">
+                                    {{ vehicle.get_current_title_status_display }}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    
+                    {% if vehicle.engine or vehicle.transmission %}
+                    <hr>
+                    <h6>Technical Specifications</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-1 small"><strong>Engine:</strong> {{ vehicle.engine|default:"N/A" }}</p>
+                            <p class="mb-1 small"><strong>Transmission:</strong> {{ vehicle.transmission|default:"N/A" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-1 small"><strong>Drivetrain:</strong> {{ vehicle.drivetrain|default:"N/A" }}</p>
+                            <p class="mb-1 small"><strong>Fuel Type:</strong> {{ vehicle.fuel_type|default:"N/A" }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Accidents -->
+            {% if has_accidents %}
+            <div class="card mb-3">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Accident History</h5>
+                </div>
+                <div class="card-body">
+                    {% for accident in accidents %}
+                    <div class="border-start border-3 border-danger ps-3 mb-3">
+                        <div class="d-flex justify-content-between">
+                            <h6>{{ accident.accident_date }}</h6>
+                            <span class="badge bg-{% if accident.severity == 'total_loss' %}danger{% elif accident.severity == 'severe' %}warning{% else %}secondary{% endif %}">
+                                {{ accident.get_severity_display }}
+                            </span>
+                        </div>
+                        <p class="small mb-1"><strong>Source:</strong> {{ accident.get_source_display }}</p>
+                        {% if accident.damage_description %}
+                        <p class="small mb-1">{{ accident.damage_description }}</p>
+                        {% endif %}
+                        {% if accident.estimated_damage_cost %}
+                        <p class="small mb-1"><strong>Estimated Cost:</strong> ${{ accident.estimated_damage_cost }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Mileage Records -->
+            {% if mileage_records %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-speedometer2"></i> Mileage History</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Mileage</th>
+                                    <th>Source</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in mileage_records %}
+                                <tr {% if record.is_rollback_suspected %}class="table-danger"{% endif %}>
+                                    <td>{{ record.recorded_date }}</td>
+                                    <td>{{ record.mileage|default:"N/A" }} {{ record.unit }}</td>
+                                    <td>
+                                        {{ record.get_source_display }}
+                                        {% if record.is_rollback_suspected %}
+                                        <span class="badge bg-danger">Rollback Suspected</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Title Events -->
+            {% if title_events %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-file-earmark-text"></i> Title Events</h5>
+                </div>
+                <div class="card-body">
+                    {% for event in title_events %}
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between">
+                            <strong>{{ event.event_date }}</strong>
+                            <span class="badge bg-secondary">{{ event.get_event_type_display }}</span>
+                        </div>
+                        <p class="small mb-0 text-muted">{{ event.state }} - {{ event.get_title_status_display }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'generate_report' vehicle.vin %}" class="btn btn-dark w-100 mb-2">
+                        <i class="bi bi-file-earmark-text"></i> Generate Report
+                    </a>
+                    <a href="{% url 'vehicle_history' vehicle.vin %}" class="btn btn-outline-dark w-100 mb-2">
+                        <i class="bi bi-clock-history"></i> Full History
+                    </a>
+                    {% if vehicle.consenting_for_tracking %}
+                    <a href="{% url 'vehicle_tracking' vehicle.vin %}" class="btn btn-outline-primary w-100 mb-2">
+                        <i class="bi bi-geo-alt"></i> GPS Tracking
+                    </a>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'submit_report' vehicle.vin %}" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-flag"></i> Submit Report
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Registrations -->
+            {% if registrations %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6 class="mb-0">License Plates</h6>
+                </div>
+                <div class="card-body">
+                    {% for reg in registrations %}
+                    <div class="mb-2">
+                        <strong>{{ reg.plate_number }}</strong>
+                        <span class="badge bg-secondary">{{ reg.state }}</span>
+                        {% if reg.is_current %}
+                        <span class="badge bg-success">Current</span>
+                        {% endif %}
+                        <p class="small text-muted mb-0">Issued: {{ reg.issued_date }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Ownership -->
+            {% if ownership_records %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6 class="mb-0">Ownership History</h6>
+                </div>
+                <div class="card-body">
+                    {% for owner in ownership_records %}
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between">
+                            <span class="small"><strong>Owner #{{ owner.owner_sequence }}</strong></span>
+                            {% if owner.is_current %}
+                            <span class="badge bg-success">Current</span>
+                            {% endif %}
+                        </div>
+                        <p class="small text-muted mb-0">{{ owner.get_owner_type_display }}</p>
+                        <p class="small text-muted mb-0">{{ owner.ownership_start }} - {% if owner.ownership_end %}{{ owner.ownership_end }}{% else %}Present{% endif %}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Theft Records -->
+            {% if has_theft %}
+            <div class="card mb-3 border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h6 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Theft Records</h6>
+                </div>
+                <div class="card-body">
+                    {% for theft in theft_records %}
+                    <div class="mb-2">
+                        <p class="small mb-1"><strong>Status:</strong> <span class="badge bg-danger">{{ theft.get_status_display }}</span></p>
+                        <p class="small mb-1"><strong>Reported:</strong> {{ theft.reported_date }}</p>
+                        <p class="small mb-1"><strong>Agency:</strong> {{ theft.reporting_agency }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
