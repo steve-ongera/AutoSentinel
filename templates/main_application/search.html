@@ -1,0 +1,48 @@
+<!-- search.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Search Vehicle - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h4 class="mb-0"><i class="bi bi-search"></i> Vehicle Search</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form action="{% url 'search_results' %}" method="get">
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Search Type</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="type" id="type_vin" value="vin" checked>
+                                <label class="btn btn-outline-dark" for="type_vin">VIN</label>
+                                
+                                <input type="radio" class="btn-check" name="type" id="type_plate" value="plate">
+                                <label class="btn btn-outline-dark" for="type_plate">License Plate</label>
+                                
+                                <input type="radio" class="btn-check" name="type" id="type_make_model" value="make_model">
+                                <label class="btn btn-outline-dark" for="type_make_model">Make/Model</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="search_query" class="form-label">Search Query</label>
+                            <input type="text" class="form-control" id="search_query" name="q" placeholder="Enter search term" required>
+                            <div class="form-text">
+                                <small>VIN: 17 characters (e.g., 1HGBH41JXMN109186)</small><br>
+                                <small>Plate: Include state code (e.g., ABC-1234 CA)</small>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark btn-lg w-100">
+                            <i class="bi bi-search"></i> Search Vehicle
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

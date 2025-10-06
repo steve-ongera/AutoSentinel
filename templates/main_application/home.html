@@ -1,0 +1,154 @@
+{% extends 'main_application/base.html' %}
+
+{% block title %}AutoSentinel - Vehicle History & Monitoring{% endblock %}
+
+{% block content %}
+<div class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="display-5 fw-bold mb-3">Complete Vehicle History Reports</h1>
+                <p class="lead mb-4">Access comprehensive vehicle history, accident records, title status, and real-time tracking data</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'search' %}" class="btn btn-light btn-lg">
+                        <i class="bi bi-search"></i> Search Vehicle
+                    </a>
+                    <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card bg-white text-dark mt-4 mt-lg-0">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">Quick VIN Lookup</h5>
+                        <form action="{% url 'search_results' %}" method="get">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="q" placeholder="Enter VIN" maxlength="17" required>
+                                <input type="hidden" name="type" value="vin">
+                                <button class="btn btn-dark" type="submit">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+                        </form>
+                        <p class="text-muted small mb-0">Example: 1HGBH41JXMN109186</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <!-- Statistics -->
+    <div class="row text-center mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <i class="bi bi-database text-primary fs-1"></i>
+                    <h3 class="mt-3 mb-1">{{ stats.total_vehicles|default:0 }}</h3>
+                    <p class="text-muted small mb-0">Vehicles in Database</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <i class="bi bi-file-earmark-text text-success fs-1"></i>
+                    <h3 class="mt-3 mb-1">{{ stats.total_reports|default:0 }}</h3>
+                    <p class="text-muted small mb-0">Reports Generated</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
+                    <h3 class="mt-3 mb-1">{{ stats.stolen_vehicles|default:0 }}</h3>
+                    <p class="text-muted small mb-0">Stolen Vehicles Tracked</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <i class="bi bi-geo-alt text-info fs-1"></i>
+                    <h3 class="mt-3 mb-1">{{ stats.tracked_vehicles|default:0 }}</h3>
+                    <p class="text-muted small mb-0">Actively Tracked</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row mb-5">
+        <div class="col-lg-12 text-center mb-4">
+            <h2>Why Choose AutoSentinel?</h2>
+            <p class="text-muted">Comprehensive vehicle intelligence for informed decisions</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-shield-check text-primary" style="font-size: 2.5rem;"></i>
+                    <h5 class="mt-3">Verified Data Sources</h5>
+                    <p class="text-muted small">Information from DMV, insurance companies, and official databases</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-clock-history text-success" style="font-size: 2.5rem;"></i>
+                    <h5 class="mt-3">Complete History</h5>
+                    <p class="text-muted small">Title events, accidents, ownership transfers, and mileage records</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <i class="bi bi-geo-alt-fill text-info" style="font-size: 2.5rem;"></i>
+                    <h5 class="mt-3">Real-Time Tracking</h5>
+                    <p class="text-muted small">GPS monitoring for consenting vehicle owners</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Searches -->
+    {% if recent_searches %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Recent Searches</span>
+                    <a href="{% url 'search' %}" class="btn btn-sm btn-dark">View All</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Query</th>
+                                    <th>Type</th>
+                                    <th>Results</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for search in recent_searches %}
+                                <tr>
+                                    <td><code>{{ search.query_text }}</code></td>
+                                    <td><span class="badge bg-secondary">{{ search.get_search_type_display }}</span></td>
+                                    <td>{{ search.results_count }}</td>
+                                    <td class="text-muted">{{ search.created_at|timesince }} ago</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

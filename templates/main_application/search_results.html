@@ -1,0 +1,66 @@
+<!-- search_results.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Search Results - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <div>
+            <h2>Search Results</h2>
+            <p class="text-muted mb-0">Found {{ total_results }} result{{ total_results|pluralize }} for "{{ query }}"</p>
+        </div>
+        <a href="{% url 'search' %}" class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left"></i> New Search
+        </a>
+    </div>
+
+    {% if vehicles %}
+    <div class="row">
+        {% for vehicle in vehicles %}
+        <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</h5>
+                    <p class="text-muted small mb-2">VIN: <code>{{ vehicle.vin }}</code></p>
+                    
+                    <div class="mb-3">
+                        {% if vehicle.is_stolen %}
+                        <span class="badge bg-danger"><i class="bi bi-exclamation-triangle"></i> Stolen</span>
+                        {% endif %}
+                        <span class="badge bg-secondary">{{ vehicle.get_current_title_status_display }}</span>
+                    </div>
+                    
+                    <ul class="list-unstyled small mb-3">
+                        <li><i class="bi bi-speedometer2"></i> {{ vehicle.current_mileage|default:"N/A" }} miles</li>
+                        <li><i class="bi bi-palette"></i> {{ vehicle.color|default:"N/A" }}</li>
+                        <li><i class="bi bi-people"></i> {{ vehicle.current_owner_count }} owner{{ vehicle.current_owner_count|pluralize }}</li>
+                    </ul>
+                    
+                    <a href="{% url 'vehicle_detail' vehicle.vin %}" class="btn btn-dark btn-sm w-100">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if vehicles.has_other_pages %}
+    <nav>
+        <ul class="pagination justify-content-center">
+            {% if vehicles.has_previous %}
+            <li class="page-item"><a class="page-link" href="?q={{ query }}&type={{ search_type }}&page={{ vehicles.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            <li class="page-item active"><span class="page-link">{{ vehicles.number }} of {{ vehicles.paginator.num_pages }}</span></li>
+            {% if vehicles.has_next %}
+            <li class="page-item"><a class="page-link" href="?q={{ query }}&type={{ search_type }}&page={{ vehicles.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    {% else %}
+    <div class="alert alert-warning">
+        <i class="bi bi-info-circle"></i> No vehicles found matching your search criteria.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

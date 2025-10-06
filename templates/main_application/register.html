@@ -1,0 +1,51 @@
+<!-- register.html -->
+{% extends 'main_application/base.html' %}
+
+{% block title %}Register - AutoSentinel{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h4 class="mb-0">Create Account</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Account Type</label>
+                            <select class="form-select" id="role" name="role">
+                                <option value="guest">Guest (Free)</option>
+                                <option value="verified_buyer">Verified Buyer</option>
+                                <option value="dealer">Dealer</option>
+                                <option value="fleet_admin">Fleet Administrator</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-dark w-100">Create Account</button>
+                    </form>
+                    <hr>
+                    <p class="text-center text-muted mb-0 small">
+                        Already have an account? <a href="{% url 'login' %}">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
