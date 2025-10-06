@@ -1,0 +1,349 @@
+INFO 2025-10-06 23:46:57,601 autoreload Watching for file changes with StatReloader
+INFO 2025-10-06 23:47:03,842 basehttp "GET / HTTP/1.1" 200 12068
+WARNING 2025-10-06 23:47:04,231 log Not Found: /favicon.ico
+WARNING 2025-10-06 23:47:04,232 log Not Found: /finance/payments/6/
+WARNING 2025-10-06 23:47:04,233 basehttp "GET /favicon.ico HTTP/1.1" 404 2214
+WARNING 2025-10-06 23:47:04,233 basehttp "GET /finance/payments/6/ HTTP/1.1" 404 2238
+INFO 2025-10-06 23:47:12,379 basehttp "GET / HTTP/1.1" 200 12068
+WARNING 2025-10-06 23:47:13,614 log Not Found: /favicon.ico
+WARNING 2025-10-06 23:47:13,615 basehttp "GET /favicon.ico HTTP/1.1" 404 2214
+INFO 2025-10-06 23:47:18,289 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-10-06 23:47:20,066 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4173
+INFO 2025-10-06 23:47:20,085 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:47:20,088 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:47:20,092 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-10-06 23:47:20,100 basehttp "GET /static/admin/css/login.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:47:20,101 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:47:20,101 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:47:20,211 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+ERROR 2025-10-06 23:47:28,768 log Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\module_loading.py", line 16, in cached_import
+    return getattr(module, class_name)
+AttributeError: module 'redis.connection' has no attribute 'HiredisParser'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 449, in login
+    return LoginView.as_view(**defaults)(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\edit.py", line 151, in post
+    return self.form_valid(form)
+           ~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\views.py", line 108, in form_valid
+    auth_login(self.request, form.get_user())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\__init__.py", line 187, in login
+    request.session.cycle_key()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 432, in cycle_key
+    self.create()
+    ~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\cache.py", line 55, in create
+    self._session_key = self._get_new_session_key()
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 196, in _get_new_session_key
+    if not self.exists(session_key):
+           ~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\cache.py", line 117, in exists
+    bool(session_key) and (self.cache_key_prefix + session_key) in self._cache
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\cache\backends\base.py", line 301, in __contains__
+    return self.has_key(key)
+           ~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 138, in has_key
+    return self.client.has_key(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 734, in has_key
+    client = self.get_client(write=False)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 128, in get_client
+    self._clients[index] = self.connect(index)
+                           ~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 157, in connect
+    return self.connection_factory.connect(self._server[index])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\pool.py", line 69, in connect
+    params = self.make_connection_params(url)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\pool.py", line 41, in make_connection_params
+    "parser_class": self.get_parser_cls(),
+                    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\pool.py", line 97, in get_parser_cls
+    return import_string(cls)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\module_loading.py", line 32, in import_string
+    raise ImportError(
+    ...<2 lines>...
+    ) from err
+ImportError: Module "redis.connection" does not define a "HiredisParser" attribute/class
+ERROR 2025-10-06 23:47:28,792 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 500 224741
+ERROR 2025-10-06 23:49:08,844 log Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\module_loading.py", line 16, in cached_import
+    return getattr(module, class_name)
+AttributeError: module 'redis.connection' has no attribute 'HiredisParser'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 449, in login
+    return LoginView.as_view(**defaults)(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\edit.py", line 151, in post
+    return self.form_valid(form)
+           ~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\views.py", line 108, in form_valid
+    auth_login(self.request, form.get_user())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\__init__.py", line 187, in login
+    request.session.cycle_key()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 432, in cycle_key
+    self.create()
+    ~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\cache.py", line 55, in create
+    self._session_key = self._get_new_session_key()
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 196, in _get_new_session_key
+    if not self.exists(session_key):
+           ~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\cache.py", line 117, in exists
+    bool(session_key) and (self.cache_key_prefix + session_key) in self._cache
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\cache\backends\base.py", line 301, in __contains__
+    return self.has_key(key)
+           ~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 138, in has_key
+    return self.client.has_key(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 734, in has_key
+    client = self.get_client(write=False)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 128, in get_client
+    self._clients[index] = self.connect(index)
+                           ~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 157, in connect
+    return self.connection_factory.connect(self._server[index])
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\pool.py", line 69, in connect
+    params = self.make_connection_params(url)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\pool.py", line 41, in make_connection_params
+    "parser_class": self.get_parser_cls(),
+                    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\pool.py", line 97, in get_parser_cls
+    return import_string(cls)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\module_loading.py", line 32, in import_string
+    raise ImportError(
+    ...<2 lines>...
+    ) from err
+ImportError: Module "redis.connection" does not define a "HiredisParser" attribute/class
+ERROR 2025-10-06 23:49:08,865 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 500 224741
+INFO 2025-10-06 23:49:47,108 autoreload D:\BACKUP\Complete Projects\AutoSentinel\AutoSentinel\settings.py changed, reloading.
+INFO 2025-10-06 23:49:49,392 autoreload Watching for file changes with StatReloader
+ERROR 2025-10-06 23:49:59,557 log Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 29, in _decorator
+    return method(self, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 138, in has_key
+    return self.client.has_key(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 740, in has_key
+    raise ConnectionInterrupted(connection=client) from e
+django_redis.exceptions.ConnectionInterrupted: Redis ConnectionError: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\admin\sites.py", line 449, in login
+    return LoginView.as_view(**defaults)(request)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\base.py", line 105, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\debug.py", line 143, in sensitive_post_parameters_wrapper
+    return view(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 192, in _view_wrapper
+    result = _process_exception(request, e)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 190, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\views.py", line 89, in dispatch
+    return super().dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\base.py", line 144, in dispatch
+    return handler(request, *args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\views\generic\edit.py", line 151, in post
+    return self.form_valid(form)
+           ~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\views.py", line 108, in form_valid
+    auth_login(self.request, form.get_user())
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\__init__.py", line 187, in login
+    request.session.cycle_key()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 432, in cycle_key
+    self.create()
+    ~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\cache.py", line 55, in create
+    self._session_key = self._get_new_session_key()
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 196, in _get_new_session_key
+    if not self.exists(session_key):
+           ~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\cache.py", line 117, in exists
+    bool(session_key) and (self.cache_key_prefix + session_key) in self._cache
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django\core\cache\backends\base.py", line 301, in __contains__
+    return self.has_key(key)
+           ~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\cache.py", line 36, in _decorator
+    raise e.__cause__  # noqa: B904
+    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\django_redis\client\default.py", line 738, in has_key
+    return client.exists(key) == 1
+           ~~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\commands\core.py", line 1736, in exists
+    return self.execute_command("EXISTS", *names, keys=names)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\client.py", line 621, in execute_command
+    return self._execute_command(*args, **options)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\client.py", line 627, in _execute_command
+    conn = self.connection or pool.get_connection()
+                              ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\utils.py", line 195, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\connection.py", line 1533, in get_connection
+    connection.connect()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\connection.py", line 380, in connect
+    self.connect_check_health(check_health=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Roaming\Python\Python313\site-packages\redis\connection.py", line 397, in connect_check_health
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+ERROR 2025-10-06 23:49:59,593 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 500 233374
+INFO 2025-10-06 23:51:02,118 autoreload D:\BACKUP\Complete Projects\AutoSentinel\AutoSentinel\settings.py changed, reloading.
+INFO 2025-10-06 23:51:03,998 autoreload Watching for file changes with StatReloader
+INFO 2025-10-06 23:51:10,150 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-10-06 23:51:10,353 basehttp "GET /admin/ HTTP/1.1" 200 11581
+INFO 2025-10-06 23:51:10,384 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,393 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,398 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,399 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,401 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,402 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,408 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,417 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:10,418 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:17,041 basehttp "GET /admin/django_celery_results/taskresult/ HTTP/1.1" 200 13912
+INFO 2025-10-06 23:51:17,066 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:17,083 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:17,083 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:17,083 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:17,096 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:17,367 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-10-06 23:51:17,471 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-10-06 23:51:17,482 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2025-10-06 23:51:17,656 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-10-06 23:51:17,716 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-10-06 23:51:17,756 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-10-06 23:51:17,792 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2025-10-06 23:51:17,823 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2025-10-06 23:51:17,832 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2025-10-06 23:51:18,339 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2025-10-06 23:51:18,348 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-10-06 23:51:18,385 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-10-06 23:51:18,395 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2025-10-06 23:51:18,435 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-10-06 23:51:18,441 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-10-06 23:51:20,704 basehttp "GET /admin/ HTTP/1.1" 200 11581
+INFO 2025-10-06 23:58:29,838 autoreload D:\BACKUP\Complete Projects\AutoSentinel\main_application\admin.py changed, reloading.
+INFO 2025-10-06 23:58:31,563 autoreload Watching for file changes with StatReloader
