@@ -2,153 +2,656 @@
 
 {% block title %}AutoSentinel - Vehicle History & Monitoring{% endblock %}
 
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 5rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: white;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+        font-weight: 400;
+        margin-bottom: 2rem;
+        color: rgba(255, 255, 255, 0.95);
+        line-height: 1.6;
+    }
+    
+    .search-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+    }
+    
+    .search-input {
+        border-radius: 8px;
+        border: 2px solid #e1e8ed;
+        padding: 0.875rem 1.25rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .search-input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+    }
+    
+    .search-btn {
+        padding: 0.875rem 2rem;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+    
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e1e8ed;
+        height: 100%;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+    
+    .stat-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 1.5rem;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+    
+    .stat-label {
+        font-size: 0.938rem;
+        color: #6c757d;
+        font-weight: 500;
+    }
+    
+    .feature-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        height: 100%;
+        border: 1px solid #e1e8ed;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        transform: translateY(-4px);
+    }
+    
+    .feature-icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+    }
+    
+    .feature-description {
+        font-size: 0.938rem;
+        color: #6c757d;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .feature-list li {
+        padding: 0.5rem 0;
+        color: #6c757d;
+        font-size: 0.875rem;
+    }
+    
+    .feature-list li i {
+        color: #28a745;
+        margin-right: 0.5rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .section-subtitle {
+        font-size: 1.125rem;
+        color: #6c757d;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .trust-badge {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid #e1e8ed;
+    }
+    
+    .trust-badge i {
+        font-size: 2rem;
+        color: #4a90e2;
+        margin-bottom: 0.5rem;
+    }
+    
+    .trust-badge-text {
+        font-size: 0.875rem;
+        color: #6c757d;
+        margin: 0;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 4rem 0;
+        border-radius: 16px;
+        text-align: center;
+        color: white;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-text {
+        font-size: 1.125rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+    
+    .recent-searches-table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e1e8ed;
+    }
+    
+    .table-header {
+        background: #f8f9fa;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid #e1e8ed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .table-header h5 {
+        margin: 0;
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #2c3e50;
+    }
+    
+    .process-step {
+        text-align: center;
+        padding: 2rem;
+        position: relative;
+    }
+    
+    .process-number {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 auto 1.5rem;
+    }
+    
+    .process-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        color: #2c3e50;
+    }
+    
+    .process-description {
+        font-size: 0.938rem;
+        color: #6c757d;
+        line-height: 1.6;
+    }
+    
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.125rem;
+        }
+        
+        .section-title {
+            font-size: 1.75rem;
+        }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="bg-dark text-white py-5">
+<!-- Hero Section -->
+<section class="hero-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-7">
-                <h1 class="display-5 fw-bold mb-3">Complete Vehicle History Reports</h1>
-                <p class="lead mb-4">Access comprehensive vehicle history, accident records, title status, and real-time tracking data</p>
-                <div class="d-flex gap-3">
+        <div class="row align-items-center hero-content">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="hero-title">Complete Vehicle Intelligence at Your Fingertips</h1>
+                <p class="hero-subtitle">Access comprehensive vehicle history reports, accident records, title status, ownership transfers, and real-time GPS tracking data. Make informed decisions with verified data from trusted sources.</p>
+                <div class="d-flex gap-3 flex-wrap">
                     <a href="{% url 'search' %}" class="btn btn-light btn-lg">
-                        <i class="bi bi-search"></i> Search Vehicle
+                        <i class="bi bi-search"></i> Search Vehicle Now
                     </a>
-                    <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">Learn More</a>
+                    <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-info-circle"></i> Learn More
+                    </a>
+                </div>
+                
+                <!-- Trust Badges -->
+                <div class="row mt-4">
+                    <div class="col-4">
+                        <div class="trust-badge">
+                            <i class="bi bi-shield-check"></i>
+                            <p class="trust-badge-text"><strong>Verified</strong><br>Data Sources</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="trust-badge">
+                            <i class="bi bi-lock"></i>
+                            <p class="trust-badge-text"><strong>Secure</strong><br>& Private</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="trust-badge">
+                            <i class="bi bi-lightning"></i>
+                            <p class="trust-badge-text"><strong>Instant</strong><br>Results</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card bg-white text-dark mt-4 mt-lg-0">
-                    <div class="card-body p-4">
-                        <h5 class="card-title mb-3">Quick VIN Lookup</h5>
-                        <form action="{% url 'search_results' %}" method="get">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" name="q" placeholder="Enter VIN" maxlength="17" required>
-                                <input type="hidden" name="type" value="vin">
-                                <button class="btn btn-dark" type="submit">
-                                    <i class="bi bi-search"></i> Search
-                                </button>
-                            </div>
-                        </form>
-                        <p class="text-muted small mb-0">Example: 1HGBH41JXMN109186</p>
+            
+            <div class="col-lg-6">
+                <div class="search-card">
+                    <h3 class="mb-3"><i class="bi bi-search text-primary"></i> Quick VIN Lookup</h3>
+                    <p class="text-muted mb-4">Enter a Vehicle Identification Number to get instant access to comprehensive vehicle history</p>
+                    <form action="{% url 'search_results' %}" method="get">
+                        <div class="mb-3">
+                            <input type="text" class="form-control search-input" name="q" placeholder="Enter 17-character VIN (e.g., 1HGBH41JXMN109186)" maxlength="17" required>
+                            <input type="hidden" name="type" value="vin">
+                        </div>
+                        <button class="btn btn-primary w-100 search-btn" type="submit">
+                            <i class="bi bi-search"></i> Search Vehicle History
+                        </button>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <small class="text-muted">
+                            <i class="bi bi-info-circle"></i> VIN can be found on vehicle registration, insurance card, or dashboard
+                        </small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="container my-5">
-    <!-- Statistics -->
-    <div class="row text-center mb-5">
-        <div class="col-md-3 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <i class="bi bi-database text-primary fs-1"></i>
-                    <h3 class="mt-3 mb-1">{{ stats.total_vehicles|default:0 }}</h3>
-                    <p class="text-muted small mb-0">Vehicles in Database</p>
+<!-- Statistics Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(74, 144, 226, 0.1);">
+                        <i class="bi bi-database text-primary"></i>
+                    </div>
+                    <div class="stat-number">{{ stats.total_vehicles|default:"50M+" }}</div>
+                    <div class="stat-label">Vehicles Tracked</div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <i class="bi bi-file-earmark-text text-success fs-1"></i>
-                    <h3 class="mt-3 mb-1">{{ stats.total_reports|default:0 }}</h3>
-                    <p class="text-muted small mb-0">Reports Generated</p>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(40, 167, 69, 0.1);">
+                        <i class="bi bi-file-earmark-text text-success"></i>
+                    </div>
+                    <div class="stat-number">{{ stats.total_reports|default:"2M+" }}</div>
+                    <div class="stat-label">Reports Generated</div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <i class="bi bi-exclamation-triangle text-danger fs-1"></i>
-                    <h3 class="mt-3 mb-1">{{ stats.stolen_vehicles|default:0 }}</h3>
-                    <p class="text-muted small mb-0">Stolen Vehicles Tracked</p>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(220, 53, 69, 0.1);">
+                        <i class="bi bi-exclamation-triangle text-danger"></i>
+                    </div>
+                    <div class="stat-number">{{ stats.stolen_vehicles|default:"125K+" }}</div>
+                    <div class="stat-label">Stolen Alerts</div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <i class="bi bi-geo-alt text-info fs-1"></i>
-                    <h3 class="mt-3 mb-1">{{ stats.tracked_vehicles|default:0 }}</h3>
-                    <p class="text-muted small mb-0">Actively Tracked</p>
+            <div class="col-6 col-md-3">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(23, 162, 184, 0.1);">
+                        <i class="bi bi-geo-alt text-info"></i>
+                    </div>
+                    <div class="stat-number">{{ stats.tracked_vehicles|default:"300K+" }}</div>
+                    <div class="stat-label">Active Tracking</div>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Features -->
-    <div class="row mb-5">
-        <div class="col-lg-12 text-center mb-4">
-            <h2>Why Choose AutoSentinel?</h2>
-            <p class="text-muted">Comprehensive vehicle intelligence for informed decisions</p>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="bi bi-shield-check text-primary" style="font-size: 2.5rem;"></i>
-                    <h5 class="mt-3">Verified Data Sources</h5>
-                    <p class="text-muted small">Information from DMV, insurance companies, and official databases</p>
+<!-- How It Works Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">Get comprehensive vehicle insights in three simple steps</p>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="process-number">1</div>
+                    <h4 class="process-title">Enter VIN or License Plate</h4>
+                    <p class="process-description">Simply enter the vehicle identification number or license plate number in our search tool</p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="bi bi-clock-history text-success" style="font-size: 2.5rem;"></i>
-                    <h5 class="mt-3">Complete History</h5>
-                    <p class="text-muted small">Title events, accidents, ownership transfers, and mileage records</p>
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="process-number">2</div>
+                    <h4 class="process-title">We Search Multiple Databases</h4>
+                    <p class="process-description">Our system instantly queries DMV records, insurance databases, and official sources</p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 border-0 shadow-sm">
-                <div class="card-body text-center p-4">
-                    <i class="bi bi-geo-alt-fill text-info" style="font-size: 2.5rem;"></i>
-                    <h5 class="mt-3">Real-Time Tracking</h5>
-                    <p class="text-muted small">GPS monitoring for consenting vehicle owners</p>
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="process-number">3</div>
+                    <h4 class="process-title">Receive Detailed Report</h4>
+                    <p class="process-description">Get a comprehensive report with all vehicle history, accidents, and ownership details</p>
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Recent Searches -->
-    {% if recent_searches %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>Recent Searches</span>
-                    <a href="{% url 'search' %}" class="btn btn-sm btn-dark">View All</a>
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Comprehensive Vehicle Intelligence</h2>
+        <p class="section-subtitle">Everything you need to know about any vehicle, all in one place</p>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(74, 144, 226, 0.1);">
+                        <i class="bi bi-shield-check text-primary"></i>
+                    </div>
+                    <h4 class="feature-title">Title & Ownership History</h4>
+                    <p class="feature-description">Complete title information including ownership transfers, salvage titles, and lien records</p>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Title status verification</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Ownership transfer history</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lien and loan records</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Salvage/rebuilt title alerts</li>
+                    </ul>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-sm mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Query</th>
-                                    <th>Type</th>
-                                    <th>Results</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for search in recent_searches %}
-                                <tr>
-                                    <td><code>{{ search.query_text }}</code></td>
-                                    <td><span class="badge bg-secondary">{{ search.get_search_type_display }}</span></td>
-                                    <td>{{ search.results_count }}</td>
-                                    <td class="text-muted">{{ search.created_at|timesince }} ago</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(220, 53, 69, 0.1);">
+                        <i class="bi bi-exclamation-triangle text-danger"></i>
+                    </div>
+                    <h4 class="feature-title">Accident & Damage Reports</h4>
+                    <p class="feature-description">Detailed accident history from insurance claims, police reports, and repair facilities</p>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Accident severity ratings</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Insurance claim history</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Structural damage reports</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Airbag deployment records</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(40, 167, 69, 0.1);">
+                        <i class="bi bi-speedometer2 text-success"></i>
+                    </div>
+                    <h4 class="feature-title">Mileage Verification</h4>
+                    <p class="feature-description">Track odometer readings over time and detect potential rollback fraud</p>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Historical mileage records</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Rollback detection</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Service record validation</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Inspection history</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(253, 126, 20, 0.1);">
+                        <i class="bi bi-tools" style="color: #fd7e14;"></i>
+                    </div>
+                    <h4 class="feature-title">Service & Maintenance</h4>
+                    <p class="feature-description">Complete service history from dealerships, repair shops, and maintenance facilities</p>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Detailed service records</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Recall information</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Parts replacement history</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Warranty status</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(23, 162, 184, 0.1);">
+                        <i class="bi bi-geo-alt-fill text-info"></i>
+                    </div>
+                    <h4 class="feature-title">Real-Time GPS Tracking</h4>
+                    <p class="feature-description">Monitor vehicle location and movement patterns with consent-based GPS tracking</p>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Live location updates</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Geofence alerts</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Route history</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Speed monitoring</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: rgba(108, 117, 125, 0.1);">
+                        <i class="bi bi-building text-secondary"></i>
+                    </div>
+                    <h4 class="feature-title">Market Value Analysis</h4>
+                    <p class="feature-description">Current market value estimates based on condition, history, and local market data</p>
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Fair market value</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Trade-in estimates</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Price trends</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Comparable sales</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recent Searches Section -->
+{% if recent_searches %}
+<section class="py-5">
+    <div class="container">
+        <div class="recent-searches-table">
+            <div class="table-header">
+                <h5><i class="bi bi-clock-history"></i> Recent Vehicle Searches</h5>
+                <a href="{% url 'search' %}" class="btn btn-sm btn-primary">View All Searches</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th style="padding: 1rem 1.5rem;">Query</th>
+                            <th style="padding: 1rem 1.5rem;">Type</th>
+                            <th style="padding: 1rem 1.5rem;">Results Found</th>
+                            <th style="padding: 1rem 1.5rem;">Search Time</th>
+                            <th style="padding: 1rem 1.5rem;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for search in recent_searches %}
+                        <tr>
+                            <td style="padding: 1rem 1.5rem;"><code class="text-primary">{{ search.query_text }}</code></td>
+                            <td style="padding: 1rem 1.5rem;">
+                                <span class="badge" style="background-color: #4a90e2;">{{ search.get_search_type_display }}</span>
+                            </td>
+                            <td style="padding: 1rem 1.5rem;">
+                                <strong>{{ search.results_count }}</strong> vehicle(s)
+                            </td>
+                            <td style="padding: 1rem 1.5rem;" class="text-muted">
+                                <i class="bi bi-clock"></i> {{ search.created_at|timesince }} ago
+                            </td>
+                            <td style="padding: 1rem 1.5rem;">
+                                <a href="{% url 'search_results' %}?q={{ search.query_text }}&type={{ search.search_type }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-arrow-repeat"></i> Search Again
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="cta-section">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="cta-title">Ready to Uncover Complete Vehicle History?</h2>
+                    <p class="cta-text">Join thousands of smart buyers, sellers, and owners who trust AutoSentinel for comprehensive vehicle intelligence</p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="{% url 'register' %}" class="btn btn-light btn-lg">
+                            <i class="bi bi-person-plus"></i> Create Free Account
+                        </a>
+                        <a href="{% url 'pricing' %}" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-tag"></i> View Pricing Plans
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {% endif %}
-</div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Why Choose AutoSentinel?</h2>
+        <p class="section-subtitle">Trusted by vehicle buyers, sellers, and owners nationwide</p>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="stat-icon mx-auto mb-3" style="background: rgba(74, 144, 226, 0.1);">
+                        <i class="bi bi-database text-primary"></i>
+                    </div>
+                    <h5>100+ Data Sources</h5>
+                    <p class="text-muted">Access to DMV, insurance, repair shops, and official databases nationwide</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="stat-icon mx-auto mb-3" style="background: rgba(40, 167, 69, 0.1);">
+                        <i class="bi bi-shield-check text-success"></i>
+                    </div>
+                    <h5>Verified Information</h5>
+                    <p class="text-muted">All data verified and cross-referenced from multiple trusted sources</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="stat-icon mx-auto mb-3" style="background: rgba(23, 162, 184, 0.1);">
+                        <i class="bi bi-lightning text-info"></i>
+                    </div>
+                    <h5>Instant Results</h5>
+                    <p class="text-muted">Get comprehensive reports in seconds, not hours or days</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="text-center">
+                    <div class="stat-icon mx-auto mb-3" style="background: rgba(220, 53, 69, 0.1);">
+                        <i class="bi bi-headset text-danger"></i>
+                    </div>
+                    <h5>24/7 Support</h5>
+                    <p class="text-muted">Expert customer support available around the clock to assist you</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
